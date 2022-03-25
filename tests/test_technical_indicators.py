@@ -5,7 +5,7 @@ import unittest
 
 import pandas as pd
 
-from technical_indicators import TechnicalIndicators
+from technical_indicators.technical_indicators import TechnicalIndicators
 
 
 logging.basicConfig(
