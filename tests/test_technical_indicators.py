@@ -9,7 +9,7 @@ from technical_indicators import TechnicalIndicators
 
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='\t'.join([
         '%(asctime)s',
         '%(levelname)s',
@@ -20,7 +20,8 @@ logging.basicConfig(
         '%(threadName)s',
         '%(thread)d',
         '%(message)s']))
-logger = logging.Logger(__name__)
+
+logger = logging.getLogger(__name__)
 
 
 class TestTechnicalIndicators(unittest.TestCase):
@@ -32,21 +33,21 @@ class TestTechnicalIndicators(unittest.TestCase):
     def test_add_rci(self):
         self.technical.add_rci(calculation_column='close', periods=[9, 16])
 
-        print(self.technical.df.iloc[-1, :])
+        logger.debug(self.technical.df.iloc[-1, :])
 
         self.technical.add_rci(
             calculation_column='close', 
             periods=[9, 16],
             digits=2)
 
-        print(self.technical.df.iloc[-1, :])
+        logger.debug(self.technical.df.iloc[-1, :])
 
         self.technical.add_rci(
             calculation_column='close', 
             periods=[9, 16],
             change_range=False)
 
-        print(self.technical.df.iloc[-1, :])
+        logger.debug(self.technical.df.iloc[-1, :])
 
     def test_add_macd(self):
         self.technical.add_macd(
@@ -55,7 +56,7 @@ class TestTechnicalIndicators(unittest.TestCase):
             long=26,
             signal=9)
 
-        print(self.technical.df.iloc[-1, :])
+        logger.debug(self.technical.df.iloc[-1, :])
 
     def test_add_previous_value_shift_and_diff(self):
         self.technical.add_macd(
@@ -66,5 +67,5 @@ class TestTechnicalIndicators(unittest.TestCase):
 
         self.technical.add_previous_value_shift_and_diff('MACD')
 
-        print(self.technical.df.iloc[-2, :])
-        print(self.technical.df.iloc[-1, :])
+        logger.debug(self.technical.df.iloc[-2, :])
+        logger.debug(self.technical.df.iloc[-1, :])
