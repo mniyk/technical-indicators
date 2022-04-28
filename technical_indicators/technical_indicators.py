@@ -6,6 +6,9 @@ import numpy as np
 from pandas import DataFrame
 from pyti.moving_average_convergence_divergence import moving_average_convergence_divergence as macd
 from pyti.simple_moving_average import simple_moving_average as sma
+from pyti.stochastic import percent_k
+from pyti.stochastic import percent_d
+from pyti.stochrsi import stochrsi
 
 
 class TechnicalIndicators:
@@ -101,6 +104,32 @@ class TechnicalIndicators:
             f'macd_{short}_{long}'].round(digits)
         self.df[f'macd_signal_{signal}'] = (
             self.df[f'macd_signal_{signal}'].round(digits))
+
+    def add_stochastic(
+        self, 
+        calculation_column: str,
+        periods: List,
+        digits: int=4):
+        """ストキャスティクスの追加
+
+        Args:
+            calculation_column (str): 計算用の列名
+            periods (List): 期間のリスト
+            digits (int): 小数点の桁数
+
+        Examples:
+            >>> technical.add_stochastic('close', [12, 26, 54])
+        """
+        for period in periods:
+            self.df[f'stoch_k_{period}'] = percent_k(
+                self.df[calculation_column].values.tolist(), 
+                period).round(digits)
+            self.df[f'stoch_d_{period}'] = percent_d(
+                self.df[calculation_column].values.tolist(), 
+                period).round(digits)
+            self.df[f'stoch_rsi_{period}'] = stochrsi(
+                self.df[calculation_column].values.tolist(), 
+                period).round(digits)
 
     def add_previous_value_shift_and_diff(
         self, technical_indicator_name: str, diff: bool = True):

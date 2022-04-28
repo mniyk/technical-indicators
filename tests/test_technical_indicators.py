@@ -2,6 +2,7 @@
 """
 import logging
 import unittest
+from numpy import short
 
 import pandas as pd
 
@@ -55,6 +56,13 @@ class TestTechnicalIndicators(unittest.TestCase):
             short=12,
             long=26,
             signal=9)
+
+        logger.debug(self.technical.df.iloc[-1, :])
+
+    def test_add_stochastic(self):
+        self.technical.add_stochastic(
+            calculation_column='close',
+            periods=[12, 26, 54])
 
         logger.debug(self.technical.df.iloc[-1, :])
 
