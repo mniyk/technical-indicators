@@ -6,7 +6,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setuptools.setup(
     name='technical-indicators',
-    version='0.1.2',
+    version='0.1.3',
     author='mniyk',
     author_email='my.name.is.yohei.kono@gmail.com',
     description='technical indicators python library',
